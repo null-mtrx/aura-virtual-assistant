@@ -14,16 +14,13 @@ RULE1_MIN_TRAILING_SILENCE = 2.4
 RULE2_MIN_TRAILING_SILENCE = 1.2
 RULE3_MIN_UTTERANCE_LENGTH = 300
 
-with open("/home/w4sp/Projects/Voice-Assistant/config.json", "r") as file:
-    config = json.load(file)
-
 
 class Transcriber:
-    def __init__(self):
-        self.tokens = config["listener_params"]["tokens"]
-        self.encoder = config["listener_params"]["encoder_path"]
-        self.decoder = config["listener_params"]["decoder_path"]
-        self.joiner = config["listener_params"]["joiner_path"]
+    def __init__(self, config):
+        self.tokens = config["tokens"]
+        self.encoder = config["encoder_path"]
+        self.decoder = config["decoder_path"]
+        self.joiner = config["joiner_path"]
 
         self.recogniser = sherpa_onnx.OnlineRecognizer.from_transducer(
             tokens=self.tokens,

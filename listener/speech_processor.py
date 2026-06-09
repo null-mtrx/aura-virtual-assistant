@@ -19,8 +19,8 @@ SILENCE_BLOCK_COUNT = 7
 
 
 class ProcessSpeech:
-    def __init__(self):
-        self.transcriber = Transcriber()
+    def __init__(self, config):
+        self.transcriber = Transcriber(config["listener_params"])
 
     def process_input_stream(self):
         input_stream = sounddevice.InputStream(

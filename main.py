@@ -1,3 +1,7 @@
+import json
 from listener.speech_processor import ProcessSpeech
 
-ProcessSpeech().process_input_stream()
+with open("/home/w4sp/Projects/Voice-Assistant/config.json", "r") as file:
+    config = json.load(file)
+
+ProcessSpeech(config).process_input_stream()
