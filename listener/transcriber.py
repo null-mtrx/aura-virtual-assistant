@@ -14,7 +14,7 @@ RULE1_MIN_TRAILING_SILENCE = 2.4
 RULE2_MIN_TRAILING_SILENCE = 1.2
 RULE3_MIN_UTTERANCE_LENGTH = 300
 
-with open("/home/w4sp/Projects/Voice-Assistant/src/config.json", "r") as file:
+with open("/home/w4sp/Projects/Voice-Assistant/config.json", "r") as file:
     config = json.load(file)
 
 
