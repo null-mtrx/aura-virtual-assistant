@@ -1,8 +1,0 @@
-{
-    "listener_params": {
-        "encoder_path": "/home/w4sp/Projects/Voice-Assistant/sherpa-onnx-x-asr-160ms-streaming-zipformer-transducer-zh-en-int8-2026-06-05/encoder.int8.onnx",
-        "decoder_path": "/home/w4sp/Projects/Voice-Assistant/sherpa-onnx-x-asr-160ms-streaming-zipformer-transducer-zh-en-int8-2026-06-05/decoder.onnx",
-        "joiner_path": "/home/w4sp/Projects/Voice-Assistant/sherpa-onnx-x-asr-160ms-streaming-zipformer-transducer-zh-en-int8-2026-06-05/joiner.int8.onnx",
-        "tokens": "/home/w4sp/Projects/Voice-Assistant/sherpa-onnx-x-asr-160ms-streaming-zipformer-transducer-zh-en-int8-2026-06-05/tokens.txt"
-    }
-}
