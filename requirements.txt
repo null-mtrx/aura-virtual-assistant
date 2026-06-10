@@ -6,9 +6,13 @@ gTTS==2.5.4
 idna==3.18
 numpy==2.4.6
 pycparser==3.0
+PySide6==6.11.1
+PySide6_Addons==6.11.1
+PySide6_Essentials==6.11.1
 requests==2.34.2
 sherpa-onnx-bin==1.13.2
 sherpa-onnx-core==1.13.2
 sherpa_onnx==1.13.2
+shiboken6==6.11.1
 sounddevice==0.5.5
 urllib3==2.7.0
