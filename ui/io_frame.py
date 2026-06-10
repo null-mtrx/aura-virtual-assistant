@@ -21,3 +21,6 @@ class IOFrame(QFrame):
 
     def update_label_text(self, voice_input):
         self.label.setText(voice_input)
+
+    def clear_label(self):
+        self.label.setText("")

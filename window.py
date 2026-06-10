@@ -19,11 +19,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Voice Assistant")
         self.setFixedSize(300, 660)
-
-        self.audio_thread = QThread()
         self.processor = ProcessSpeech(config=config)
-        self.processor.moveToThread(self.audio_thread)
-
         self.build_ui()
 
     def build_ui(self):
@@ -37,10 +33,20 @@ class MainWindow(QMainWindow):
         self.control_frame.input_button.clicked.connect(self.start_speech_input)
         self.widget_layout.addWidget(self.control_frame)
 
-        self.audio_thread.started.connect(self.processor.process_input_stream)
-        self.processor.updated_text.connect(self.io_frame.update_label_text)
-
         self.setCentralWidget(self.central_widget)
 
     def start_speech_input(self):
+        self.audio_thread = QThread()
+        self.processor.moveToThread(self.audio_thread)
+        self.audio_thread.started.connect(self.processor.process_input_stream)
+        self.processor.updated_text.connect(self.io_frame.update_label_text)
+        self.processor.end_of_transcription.connect(self.stop_speech_input)
+        self.audio_thread.finished.connect(self.audio_thread.deleteLater)
+
         self.audio_thread.start()
+
+    def stop_speech_input(self):
+        if self.audio_thread.isRunning():
+            self.audio_thread.requestInterruption()
+            self.audio_thread.quit()
+            self.io_frame.clear_label()

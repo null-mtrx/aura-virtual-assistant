@@ -37,6 +37,10 @@ class Transcriber:
         self.stream = self.recogniser.create_stream()
         self.display = sherpa_onnx.Display()
 
+    def reset_stream(self):
+        self.recogniser.reset(self.stream)
+        self.stream = self.recogniser.create_stream()
+
     def speech_to_text(self, data, sample_rate):
         self.stream.accept_waveform(sample_rate, data)
 
@@ -47,8 +51,6 @@ class Transcriber:
         end_of_speech = self.recogniser.is_endpoint(self.stream)
 
         if end_of_speech:
-            if result:
-                print(result)
-
-            self.recogniser.reset(self.stream)
+            self.reset_stream()
+            return ""
         return result
