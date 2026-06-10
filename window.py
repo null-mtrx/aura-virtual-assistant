@@ -3,7 +3,7 @@ Builds the main window for the UI
 """
 
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget
-from PySide6.QtCore import QThread
+from PySide6.QtCore import QThread, QCoreApplication
 from ui.io_frame import IOFrame
 from ui.control_frame import ControlFrame
 
@@ -46,7 +46,10 @@ class MainWindow(QMainWindow):
         self.audio_thread.start()
 
     def stop_speech_input(self):
-        if self.audio_thread.isRunning():
+        self.main_thread = QCoreApplication.instance().thread()
+        if self.audio_thread.isRunning() and hasattr(self, "audio_thread"):
             self.audio_thread.requestInterruption()
             self.audio_thread.quit()
+            self.audio_thread.wait()
+            self.processor.moveToThread(self.main_thread)
             self.io_frame.clear_label()
