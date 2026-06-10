@@ -3,8 +3,6 @@ This module is responsible for transcribing the speech data into text
 """
 
 import sherpa_onnx
-import pathlib
-import json
 
 NUM_THREADS = 2
 SAMPLE_RATE = 16000
@@ -48,9 +46,9 @@ class Transcriber:
         result = self.recogniser.get_result(self.stream)
         end_of_speech = self.recogniser.is_endpoint(self.stream)
 
-        print(result, end="")
         if end_of_speech:
             if result:
                 print(result)
 
             self.recogniser.reset(self.stream)
+        return result
