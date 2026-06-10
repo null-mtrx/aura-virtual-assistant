@@ -38,8 +38,6 @@ class ProcessSpeech(QObject):
             channels=CHANNEL_TYPE,
         )
 
-        print("Speech recognition starting now")
-
         self.transcriber.reset_stream()
 
         with input_stream as stream:
@@ -57,7 +55,6 @@ class ProcessSpeech(QObject):
 
                 # Logic to detect prolonged silence
                 audio_rms_energy = np.sqrt(np.mean(audio_data**2))
-                print(audio_rms_energy)
 
                 if audio_rms_energy > SILENCE_RMS_THRESHOLD:
                     silence_block_count = 0
@@ -68,7 +65,6 @@ class ProcessSpeech(QObject):
                         silence_block_count += 1
 
                 if silence_block_count >= SILENCE_BLOCK_COUNT:
-                    print("transcription end")
                     self.end_of_transcription.emit()
 
                 self.updated_text.emit(voice_input)
