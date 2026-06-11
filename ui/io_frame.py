@@ -2,7 +2,7 @@
 This module handles the io area for the voice assistant
 """
 
-from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel
+from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QSizePolicy
 from PySide6.QtCore import Signal
 
 
@@ -11,6 +11,7 @@ class IOFrame(QFrame):
         super().__init__()
         self.frame_layout = QVBoxLayout()
         self._build_ui()
+        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
         self.setLayout(self.frame_layout)
 

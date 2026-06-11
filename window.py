@@ -4,6 +4,7 @@ Builds the main window for the UI
 
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget
 from PySide6.QtCore import QThread, QCoreApplication
+from ui.anim_frame import AnimFrame
 from ui.io_frame import IOFrame
 from ui.control_frame import ControlFrame
 
@@ -25,6 +26,9 @@ class MainWindow(QMainWindow):
     def build_ui(self):
         self.central_widget = QWidget()
         self.widget_layout = QVBoxLayout(self.central_widget)
+
+        self.anim_frame = AnimFrame()
+        self.widget_layout.addWidget(self.anim_frame)
 
         self.io_frame = IOFrame()
         self.widget_layout.addWidget(self.io_frame)
