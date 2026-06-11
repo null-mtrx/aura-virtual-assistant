@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QWidget, QSizePolicy
 from PySide6.QtGui import QPainter, QPen, QColor
 from PySide6.QtCore import QPoint, QSize
 
-PIXMAP_SIZE = 300
+DIMS = 200
 HALO_RAD = 20
 HALO_THICKNESS = 1
 HALO_BORDER_COLOR = "#e0d9ba"
@@ -15,11 +15,10 @@ HALO_BORDER_COLOR = "#e0d9ba"
 class AnimFrame(QWidget):
     def __init__(self):
         super().__init__()
-        self.setMaximumHeight(200)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
 
     def sizeHint(self):
-        return QSize(200, 200)
+        return QSize(DIMS, DIMS)
 
     def paintEvent(self, event):
         painter = QPainter(self)
