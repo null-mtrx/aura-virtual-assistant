@@ -9,7 +9,7 @@ from PySide6.QtCore import QPoint, QSize
 DIMS = 200
 HALO_RAD = 20
 HALO_THICKNESS = 1
-HALO_BORDER_COLOR = "#e0d9ba"
+HALO_BORDER_COLOR = "#fff"
 
 
 class AnimFrame(QWidget):
