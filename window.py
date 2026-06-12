@@ -50,7 +50,7 @@ class MainWindow(QMainWindow):
         self.audio_thread.started.connect(self.processor.process_input_stream)
         self.processor.updated_text.connect(self.io_frame.update_label_text)
         self.processor.rms_value.connect(
-            lambda block_rms: self.anim_frame.animate_bead(block_rms)
+            lambda block_rms: self.anim_frame.animate_beads(block_rms)
         )
         self.processor.end_of_transcription.connect(self.stop_speech_input)
         self.audio_thread.finished.connect(self.audio_thread.deleteLater)

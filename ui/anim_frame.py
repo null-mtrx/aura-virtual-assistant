@@ -13,27 +13,39 @@ DIMS = 200
 ANIMATION_DURATION_FORWARD = 150
 ANIMATION_DURATION_BACKWARD = 874
 
-MIN_BEAD_RAD = 15
-MAX_BEAD_RAD = 40
+PRIMARY_MIN_BEAD_RAD = 15
+PRIMARY_MAX_BEAD_RAD = 30
 
-BEAD_THICKNESS = 4
-BEAD_PRIMARY_COLOR = "#49b6d3"
-BEAD_SECONDARY_COLOR = "#0a416e"
+SECONDARY_MIN_BEAD_RAD = 25
+SECONDARY_MAX_BEAD_RAD = 50
+
+PRIMARY_BEAD_COLOR = "#49b6d3"
+SECONDARY_BEAD_COLOR = "#0a416e"
 
 
 class BeadFrame(QWidget):
     def __init__(self):
         super().__init__()
-        self.bead_radius = MIN_BEAD_RAD
+        self.primary_bead_radius = PRIMARY_MIN_BEAD_RAD
+        self.secondary_bead_radius = SECONDARY_MIN_BEAD_RAD
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
     @Property(float)
-    def bead_rad(self):
-        return self.bead_radius
+    def primary_bead_rad(self):
+        return self.primary_bead_radius
 
-    @bead_rad.setter
-    def bead_rad(self, val):
-        self.bead_radius = val
+    @primary_bead_rad.setter
+    def primary_bead_rad(self, val):
+        self.primary_bead_radius = val
+        self.update()
+
+    @Property(float)
+    def secondary_bead_rad(self):
+        return self.secondary_bead_radius
+
+    @primary_bead_rad.setter
+    def secondary_bead_rad(self, val):
+        self.secondary_bead_radius = val
         self.update()
 
     def minimumSizeHint(self):
@@ -41,16 +53,28 @@ class BeadFrame(QWidget):
 
     def paintEvent(self, event):
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-        pen = QPen(QColor(BEAD_PRIMARY_COLOR))
-        painter.setPen(pen)
-
-        brush = QBrush(QColor(BEAD_PRIMARY_COLOR))
-        painter.setBrush(brush)
-
         center = QPoint(self.width() / 2, self.height() / 2)
 
-        painter.drawEllipse(center, 2 * self.bead_radius, 2 * self.bead_radius)
+        primary_pen = QPen(QColor(PRIMARY_BEAD_COLOR))
+        primary_brush = QBrush(QColor(PRIMARY_BEAD_COLOR))
+        secondary_pen = QPen(QColor(SECONDARY_BEAD_COLOR))
+        secondary_brush = QBrush(QColor(SECONDARY_BEAD_COLOR))
+
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        painter.setPen(secondary_pen)
+        painter.setBrush(secondary_brush)
+
+        painter.drawEllipse(
+            center, 2 * self.secondary_bead_radius, 2 * self.secondary_bead_radius
+        )
+
+        painter.setPen(primary_pen)
+        painter.setBrush(primary_brush)
+
+        painter.drawEllipse(
+            center, 2 * self.primary_bead_radius, 2 * self.primary_bead_radius
+        )
         painter.end()
 
 
@@ -61,10 +85,15 @@ class AnimFrame(QWidget):
         self.bead = BeadFrame()
         self.anim_frame_layout.addWidget(self.bead)
 
-    def animate_bead(self, block_rms):
-        bead_rad_changed = 20 * np.sqrt(block_rms) + MIN_BEAD_RAD
+    def animate_beads(self, block_rms):
+        new_primary_bead_rad = 20 * np.sqrt(block_rms) + PRIMARY_MIN_BEAD_RAD
+        new_secondary_bead_rad = 20 * np.sqrt(block_rms) + SECONDARY_MIN_BEAD_RAD
 
-        if bead_rad_changed > MAX_BEAD_RAD:
-            bead_rad_changed = MAX_BEAD_RAD
+        if new_primary_bead_rad > PRIMARY_MAX_BEAD_RAD:
+            new_primary_bead_rad = PRIMARY_MAX_BEAD_RAD
 
-        setattr(self.bead, "bead_rad", bead_rad_changed)
+        if new_secondary_bead_rad > SECONDARY_MAX_BEAD_RAD:
+            new_secondary_bead_rad = SECONDARY_MAX_BEAD_RAD
+
+        setattr(self.bead, "primary_bead_rad", new_primary_bead_rad)
+        setattr(self.bead, "secondary_bead_rad", new_secondary_bead_rad)
