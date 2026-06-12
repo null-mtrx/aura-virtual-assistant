@@ -1,0 +1,5 @@
+/* Style the main background */
+QMainWindow {
+    background-color: #030303;
+}
+

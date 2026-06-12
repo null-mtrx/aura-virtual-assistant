@@ -15,11 +15,16 @@ with open("/home/w4sp/Projects/Voice-Assistant/config.json", "r") as file:
     config = json.load(file)
 
 
+with open("src/ui/app.qss", "r") as file:
+    style = file.read()
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Voice Assistant")
         self.setFixedSize(300, 660)
+        self.setStyleSheet(style)
         self.processor = ProcessSpeech(config=config)
         self.build_ui()
 
@@ -44,6 +49,9 @@ class MainWindow(QMainWindow):
         self.processor.moveToThread(self.audio_thread)
         self.audio_thread.started.connect(self.processor.process_input_stream)
         self.processor.updated_text.connect(self.io_frame.update_label_text)
+        self.processor.rms_value.connect(
+            lambda block_rms: self.anim_frame.animate_bead(block_rms)
+        )
         self.processor.end_of_transcription.connect(self.stop_speech_input)
         self.audio_thread.finished.connect(self.audio_thread.deleteLater)
 

@@ -14,6 +14,7 @@ SAMPLE_RATE = 16000
 BLOCK_SIZE = int(0.1 * SAMPLE_RATE)
 CHANNEL_TYPE = 1
 MAX_AUDIO_CHUNKS = 4
+TRANSFER_RATE = 16
 
 SILENCE_RMS_THRESHOLD = 0.008
 SILENCE_BLOCK_COUNT = 15
@@ -21,6 +22,7 @@ SILENCE_BLOCK_COUNT = 15
 
 class ProcessSpeech(QObject):
     updated_text = Signal(str)
+    rms_value = Signal(float)
     end_of_transcription = Signal()
 
     def __init__(self, config):
@@ -53,7 +55,7 @@ class ProcessSpeech(QObject):
                     audio_data, sample_rate=SAMPLE_RATE
                 ).lower()
 
-                # Logic to detect prolonged silence
+                # Logic to detect prolonged silence and control the halo
                 audio_rms_energy = np.sqrt(np.mean(audio_data**2))
 
                 if audio_rms_energy > SILENCE_RMS_THRESHOLD:
@@ -63,6 +65,8 @@ class ProcessSpeech(QObject):
                 else:
                     if speech_started:
                         silence_block_count += 1
+
+                self.rms_value.emit(audio_rms_energy)
 
                 if silence_block_count >= SILENCE_BLOCK_COUNT:
                     self.end_of_transcription.emit()
