@@ -3,12 +3,16 @@ Builds the main window for the UI
 """
 
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget
-from PySide6.QtCore import QThread, QCoreApplication
+from PySide6.QtCore import QThread, QCoreApplication, QTimer
+
 from ui.anim_frame import AnimFrame
 from ui.io_frame import IOFrame
 from ui.control_frame import ControlFrame
 
 from listener.speech_processor import ProcessSpeech
+from speaker.speech_engine import SpeechEngine
+
+from functools import partial
 import json
 
 with open("/home/w4sp/Projects/Voice-Assistant/config.json", "r") as file:
@@ -26,6 +30,7 @@ class MainWindow(QMainWindow):
         self.setFixedSize(300, 660)
         self.setStyleSheet(style)
         self.processor = ProcessSpeech(config=config)
+        self.speaker = SpeechEngine(config=config["speaker_params"])
         self.build_ui()
 
     def build_ui(self):
@@ -57,6 +62,9 @@ class MainWindow(QMainWindow):
 
         self.audio_thread.start()
 
+    def play_output(self):
+        self.speaker.speak("Hello world")
+
     def stop_speech_input(self):
         self.main_thread = QCoreApplication.instance().thread()
         if self.audio_thread.isRunning() and hasattr(self, "audio_thread"):
@@ -65,3 +73,5 @@ class MainWindow(QMainWindow):
             self.audio_thread.wait()
             self.processor.moveToThread(self.main_thread)
             self.io_frame.clear_label()
+
+        QTimer.singleShot(100, self.play_output)

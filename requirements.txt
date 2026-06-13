@@ -15,4 +15,6 @@ sherpa-onnx-core==1.13.2
 sherpa_onnx==1.13.2
 shiboken6==6.11.1
 sounddevice==0.5.5
+soundfile==0.14.0
+typing_extensions==4.15.0
 urllib3==2.7.0
