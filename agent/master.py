@@ -1,9 +1,6 @@
 from typing import TypedDict, Annotated
 
-from langchain_core.messages import (
-    BaseMessage,
-    SystemMessage,
-)
+from langchain_core.messages import BaseMessage, SystemMessage
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from langgraph.graph import StateGraph, START, END, add_messages
@@ -14,6 +11,7 @@ from tools.add import add_nums
 
 class AgentState(TypedDict):
     messages: Annotated[list[BaseMessage], add_messages]
+
 
 class AgentGraph:
     def __init__(self, model: str):
@@ -36,10 +34,6 @@ class AgentGraph:
         self.agent_graph.add_edge("tools", "reasoner")
 
     def reasoner(self, state: AgentState) -> AgentState:
-        user_information = (
-            ""  # TODO: write code to read the user information from a file
-        )
-
         system_prompt = SystemMessage(f"""## Introduction            
             You are Aura, a virtual assistant who likes to help people with their tasks or answering their queries. There will be questions/requests posed at you and you have to do your best to answer them                        
             
@@ -57,13 +51,11 @@ class AgentGraph:
                 2. Previous message history for this session with the user                                      
                 3. Tool information            
             - Based on the above, you are required to make reasonable decisions to help the user with their tasks
-            - Once you have gotten the output from the tool, you do not have to call it again.                                           
+            - Once you have gotten the output from the tool, you do not have to call it again.
+            - Before everything is finished, if the user has said something to you about them, call the tool to update the user's profile                                         
             
             ## Tool Information            
             1. Add Nums: This tool allows you to add two numbers with each other.                         
-            
-            ## User Infromation            
-            {user_information}
             
             ## Past History
             """)
