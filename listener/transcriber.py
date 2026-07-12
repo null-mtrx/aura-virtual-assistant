@@ -35,7 +35,6 @@ class Transcriber:
             provider="cpu",
         )
         self.stream = self.recogniser.create_stream()
-        self.display = sherpa_onnx.Display()
 
     def reset_stream(self):
         self.recogniser.reset(self.stream)
