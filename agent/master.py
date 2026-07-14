@@ -7,6 +7,7 @@ from langgraph.graph import StateGraph, START, END, add_messages
 from langgraph.prebuilt import ToolNode
 
 from tools.add import add_nums
+from tools.context_manager import get_context
 
 
 class AgentState(TypedDict):
@@ -15,7 +16,7 @@ class AgentState(TypedDict):
 
 class AgentGraph:
     def __init__(self, model: str):
-        self.tools = [add_nums]
+        self.tools = [add_nums, get_context]
         self.LLM = ChatGoogleGenerativeAI(model=model).bind_tools(self.tools)
         self.agent_graph = StateGraph(AgentState)
         self.graph_builder()
@@ -55,7 +56,8 @@ class AgentGraph:
             - Before everything is finished, if the user has said something to you about them, call the tool to update the user's profile                                         
             
             ## Tool Information            
-            1. Add Nums: This tool allows you to add two numbers with each other.                         
+            1. Add Nums: This tool allows you to add two numbers with each other.  
+            2. Get Context: This tool allows you to get previous context of the conversation by invoking it for answering a question                       
             
             ## Past History
             """)
@@ -63,7 +65,7 @@ class AgentGraph:
         past_messages = state["messages"]
         final_message = [system_prompt] + past_messages
         llm_response = self.LLM.invoke(final_message)
-        
+
         return {"messages": llm_response}
 
     def thought_router(self, state: AgentState) -> str:
