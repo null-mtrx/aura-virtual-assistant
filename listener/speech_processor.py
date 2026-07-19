@@ -2,7 +2,7 @@
 This module handles the speech to text part of the code
 """
 
-from PySide6.QtCore import QObject, Signal, QThread
+from PySide6.QtCore import QObject, Signal, QThread, QCoreApplication
 
 import sounddevice
 import numpy as np
@@ -29,6 +29,7 @@ class ProcessSpeech(QObject):
         super().__init__()
         self.config = config
         self.transcriber = Transcriber(self.config["listener_params"])
+        self.main_thread = QCoreApplication.instance().thread()
 
     def process_input_stream(self):
         print("Started processing! Called input stream")
@@ -73,3 +74,5 @@ class ProcessSpeech(QObject):
                     self.end_of_transcription.emit()
 
                 self.updated_text.emit(voice_input)
+
+            self.moveToThread(self.main_thread)

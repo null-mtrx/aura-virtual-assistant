@@ -90,10 +90,10 @@ class MainWindow(QMainWindow):
 
     def stop_speech_input(self):
         self.main_thread = QCoreApplication.instance().thread()
+
         if self.audio_thread.isRunning() and hasattr(self, "audio_thread"):
             self.audio_thread.requestInterruption()
             self.audio_thread.quit()
             self.audio_thread.wait()
-            self.processor.moveToThread(self.main_thread)
 
         QTimer.singleShot(50, self.retrieve_query)
