@@ -17,7 +17,7 @@ MAX_AUDIO_CHUNKS = 4
 TRANSFER_RATE = 16
 
 SILENCE_RMS_THRESHOLD = 0.008
-SILENCE_BLOCK_COUNT = 15
+SILENCE_BLOCK_COUNT = 7
 
 
 class ProcessSpeech(QObject):
@@ -31,6 +31,7 @@ class ProcessSpeech(QObject):
         self.transcriber = Transcriber(self.config["listener_params"])
 
     def process_input_stream(self):
+        print("Started processing! Called input stream")
         speech_started = False
         silence_block_count = 0
 

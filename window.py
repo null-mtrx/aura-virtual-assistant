@@ -3,7 +3,7 @@ Builds the main window for the UI
 """
 
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget
-from PySide6.QtCore import QThread, QCoreApplication, QTimer
+from PySide6.QtCore import QThread, QCoreApplication, QTimer, Signal
 
 from ui.anim_frame import AnimFrame
 from ui.io_frame import IOFrame
@@ -11,6 +11,8 @@ from ui.control_frame import ControlFrame
 
 from listener.speech_processor import ProcessSpeech
 from speaker.speech_engine import SpeechEngine
+
+from agent.agent_module import AgentInterface
 
 from functools import partial
 import json
@@ -24,6 +26,8 @@ with open("src/ui/app.qss", "r") as file:
 
 
 class MainWindow(QMainWindow):
+    ai_query = Signal(str)
+
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Voice Assistant")
@@ -31,6 +35,17 @@ class MainWindow(QMainWindow):
         self.setStyleSheet(style)
         self.processor = ProcessSpeech(config=config)
         self.speaker = SpeechEngine(config=config["speaker_params"])
+
+        self.agent = AgentInterface()
+        self.agent_thread = QThread()
+        self.agent.moveToThread(self.agent_thread)
+        self.ai_query.connect(self.agent.respond_to_query)
+
+        self.agent_thread.start()
+        self.agent.finished_response.connect(
+            lambda: self.control_frame.input_button.setEnabled(True)
+        )
+
         self.build_ui()
 
     def build_ui(self):
@@ -50,6 +65,7 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.central_widget)
 
     def start_speech_input(self):
+        self.io_frame.clear_label()
         self.audio_thread = QThread()
         self.processor.moveToThread(self.audio_thread)
         self.audio_thread.started.connect(self.processor.process_input_stream)
@@ -62,8 +78,15 @@ class MainWindow(QMainWindow):
 
         self.audio_thread.start()
 
-    def play_output(self):
-        self.speaker.speak("Hello world")
+    def retrieve_query(self):
+        text = self.io_frame.label.text()
+
+        if self.control_frame.input_button.isEnabled() and text:
+            self.control_frame.input_button.setDisabled(True)
+            self.ai_query.emit(self.io_frame.label.text())
+
+    def play_output(self, text: str):
+        self.speaker.speak(text)
 
     def stop_speech_input(self):
         self.main_thread = QCoreApplication.instance().thread()
@@ -72,6 +95,5 @@ class MainWindow(QMainWindow):
             self.audio_thread.quit()
             self.audio_thread.wait()
             self.processor.moveToThread(self.main_thread)
-            self.io_frame.clear_label()
 
-        QTimer.singleShot(100, self.play_output)
+        QTimer.singleShot(50, self.retrieve_query)
