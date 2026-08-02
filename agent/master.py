@@ -53,7 +53,8 @@ class AgentGraph:
                 3. Tool information            
             - Based on the above, you are required to make reasonable decisions to help the user with their tasks
             - Once you have gotten the output from the tool, you do not have to call it again.
-            - Before everything is finished, if the user has said something to you about them, call the tool to update the user's profile                                         
+            - Before everything is finished, if the user has said something to you about them, call the tool to update the user's profile
+            - Keep you answers short and concise. Do not use markdown features (#, **, **** etc.) in your answers. Keep them within 5 sentences. 
             
             ## Tool Information            
             1. Add Nums: This tool allows you to add two numbers with each other.  

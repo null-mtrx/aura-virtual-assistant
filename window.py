@@ -4,6 +4,7 @@ Builds the main window for the UI
 
 from PySide6.QtWidgets import QMainWindow, QVBoxLayout, QWidget
 from PySide6.QtCore import QThread, QCoreApplication, QTimer, Signal
+from PySide6.QtCore import Qt
 
 from ui.anim_frame import AnimFrame
 from ui.io_frame import IOFrame
@@ -14,7 +15,6 @@ from speaker.speech_engine import SpeechEngine
 
 from agent.agent_module import AgentInterface
 
-from functools import partial
 import json
 
 with open("/home/w4sp/Projects/Voice-Assistant/config.json", "r") as file:
@@ -42,8 +42,8 @@ class MainWindow(QMainWindow):
         self.ai_query.connect(self.agent.respond_to_query)
 
         self.agent_thread.start()
-        self.agent.finished_response.connect(
-            lambda: self.control_frame.input_button.setEnabled(True)
+        self.agent.output_tokens.connect(
+            self.play_output, Qt.ConnectionType.QueuedConnection
         )
 
         self.build_ui()
@@ -87,6 +87,7 @@ class MainWindow(QMainWindow):
 
     def play_output(self, text: str):
         self.speaker.speak(text)
+        self.control_frame.input_button.setEnabled(True)
 
     def stop_speech_input(self):
         self.main_thread = QCoreApplication.instance().thread()

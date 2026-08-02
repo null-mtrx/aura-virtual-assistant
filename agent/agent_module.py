@@ -8,7 +8,6 @@ import datetime
 
 class AgentInterface(QObject):
     output_tokens = Signal(str)
-    finished_response = Signal()
 
     def __init__(self):
         super().__init__()
@@ -22,10 +21,8 @@ class AgentInterface(QObject):
         print("started")
         messages = self.agent.app.invoke(agent_state)
         response = messages["messages"][-1].content[0]["text"]
-        print(response)
         self.output_tokens.emit(response)
         self.write_to_history(messages["messages"])
-        self.finished_response.emit()
 
     def write_to_history(self, messages: list):
         timestamp = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
