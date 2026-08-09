@@ -2,6 +2,7 @@ from langchain_core.tools import tool
 
 
 @tool
-def add_nums(num1: int, num2: int):
-    """Given two integers, returns their sum"""
-    return num1 + num2
+def perform_math_operations(operation_str: str) -> int:
+    """Provided a mathematical expression in a string using basic BODMAS operations, it evaluates the string"""
+    solution = eval(operation_str)
+    return solution

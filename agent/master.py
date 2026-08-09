@@ -55,9 +55,10 @@ class AgentGraph:
             - Once you have gotten the output from the tool, you do not have to call it again.
             - Before everything is finished, if the user has said something to you about them, call the tool to update the user's profile
             - Keep you answers short and concise. Do not use markdown features (#, **, **** etc.) in your answers. Keep them within 5 sentences. 
-            
+            - Refrain from introducing yourself before answering the question unless the question explicitly requires you to do it
+
             ## Tool Information            
-            1. Add Nums: This tool allows you to add two numbers with each other.  
+            1. Perform math operations: This tool allows you to evaluate mathematical expressions.
             2. Get Context: This tool allows you to get previous context of the conversation by invoking it for answering a question                       
             
             ## Past History
