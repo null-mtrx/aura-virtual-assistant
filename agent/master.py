@@ -12,6 +12,8 @@ from tools.system import (
     get_time,
     execute_low_priority_commands,
 )
+from tools.web import open_webpage, open_wiki_page
+
 from tools.context_manager import get_context
 
 
@@ -27,6 +29,8 @@ class AgentGraph:
             get_date,
             get_time,
             execute_low_priority_commands,
+            open_webpage,
+            open_wiki_page,
         ]
         self.LLM = ChatGoogleGenerativeAI(model=model).bind_tools(self.tools)
         self.agent_graph = StateGraph(AgentState)
@@ -74,6 +78,8 @@ class AgentGraph:
             3. Get Date: This tool allows you to get today's date.
             4. Get Time: This tool allows you to get the current time
             5. Execute Low Priority Commands: This tool allows you to execute low priority commands or commands without the user privilege
+            6. Open Web page: Allows you to open any web page as instructed by the user
+            7. Open wiki page: Provides you with a summary of the wikipedia page for a given topic
             
             ## Past History
             """)
