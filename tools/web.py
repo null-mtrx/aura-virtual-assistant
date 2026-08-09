@@ -21,5 +21,5 @@ def open_wiki_page(wiki_title: str) -> str:
 def open_youtube_video(title: str):
     """Based on the video title/search query, it returns the url of the first video"""
     query_search = youtubesearchpython.VideosSearch(title, limit=1)
-    url = query_search.result()["result"]["link"]
+    url = query_search.result()["result"][0]["link"]
     webbrowser.open(url)

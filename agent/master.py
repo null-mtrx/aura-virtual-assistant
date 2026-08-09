@@ -12,7 +12,7 @@ from tools.system import (
     get_time,
     execute_low_priority_commands,
 )
-from tools.web import open_webpage, open_wiki_page
+from tools.web import open_webpage, open_wiki_page, open_youtube_video
 
 from tools.context_manager import get_context
 
@@ -31,6 +31,7 @@ class AgentGraph:
             execute_low_priority_commands,
             open_webpage,
             open_wiki_page,
+            open_youtube_video,
         ]
         self.LLM = ChatGoogleGenerativeAI(model=model).bind_tools(self.tools)
         self.agent_graph = StateGraph(AgentState)
@@ -77,10 +78,10 @@ class AgentGraph:
             2. Get Context: This tool allows you to get previous context of the conversation by invoking it for answering a question
             3. Get Date: This tool allows you to get today's date.
             4. Get Time: This tool allows you to get the current time
-            5. Execute Low Priority Commands: This tool allows you to execute low priority commands or commands without the user privilege
+            5. Execute Low Priority Commands: This tool allows you to execute low priority commands or commands without the user privilege. Do not use this to open webpages, use the below tools instead
             6. Open Web page: Allows you to open any web page as instructed by the user
             7. Open wiki page: Provides you with a summary of the wikipedia page for a given topic
-            
+            8. Search youtube video: Allows you to open any video link based on the title 
             ## Past History
             """)
 
