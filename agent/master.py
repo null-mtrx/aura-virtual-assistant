@@ -6,7 +6,12 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.graph import StateGraph, START, END, add_messages
 from langgraph.prebuilt import ToolNode
 
-from tools.add import add_nums
+from tools.system import (
+    perform_math_operations,
+    get_date,
+    get_time,
+    execute_low_priority_commands,
+)
 from tools.context_manager import get_context
 
 
@@ -16,7 +21,13 @@ class AgentState(TypedDict):
 
 class AgentGraph:
     def __init__(self, model: str):
-        self.tools = [add_nums, get_context]
+        self.tools = [
+            perform_math_operations,
+            get_context,
+            get_date,
+            get_time,
+            execute_low_priority_commands,
+        ]
         self.LLM = ChatGoogleGenerativeAI(model=model).bind_tools(self.tools)
         self.agent_graph = StateGraph(AgentState)
         self.graph_builder()
@@ -59,7 +70,10 @@ class AgentGraph:
 
             ## Tool Information            
             1. Perform math operations: This tool allows you to evaluate mathematical expressions.
-            2. Get Context: This tool allows you to get previous context of the conversation by invoking it for answering a question                       
+            2. Get Context: This tool allows you to get previous context of the conversation by invoking it for answering a question
+            3. Get Date: This tool allows you to get today's date.
+            4. Get Time: This tool allows you to get the current time
+            5. Execute Low Priority Commands: This tool allows you to execute low priority commands or commands without the user privilege
             
             ## Past History
             """)
