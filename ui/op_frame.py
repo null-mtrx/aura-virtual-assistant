@@ -1,25 +1,21 @@
-"""
-This module handles the io area for the voice assistant
-"""
-
 from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QSizePolicy
-from PySide6.QtCore import Qt
 from PySide6.QtCore import Signal
 
 
-class IOFrame(QFrame):
+class OPFrame(QFrame):
     def __init__(self):
         super().__init__()
         self.frame_layout = QVBoxLayout()
         self._build_ui()
-        self.setFixedHeight(75)
-        self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.setMinimumHeight(240)
+        self.setSizePolicy(
+            QSizePolicy.Policy.Expanding, QSizePolicy.Policy.MinimumExpanding
+        )
 
         self.setLayout(self.frame_layout)
 
     def _build_ui(self):
         self.label = QLabel("Text here")
-        self.label.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.label.setWordWrap(True)
         self.frame_layout.addWidget(self.label)
 

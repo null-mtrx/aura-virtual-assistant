@@ -13,7 +13,6 @@ from tools.system import (
     execute_low_priority_commands,
 )
 from tools.web import open_webpage, open_wiki_page, open_youtube_video
-
 from tools.context_manager import get_context
 
 

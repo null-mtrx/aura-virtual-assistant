@@ -9,6 +9,7 @@ from PySide6.QtCore import Qt
 from ui.anim_frame import AnimFrame
 from ui.io_frame import IOFrame
 from ui.control_frame import ControlFrame
+from ui.op_frame import OPFrame
 
 from listener.speech_processor import ProcessSpeech
 from speaker.speech_engine import SpeechEngine
@@ -55,6 +56,9 @@ class MainWindow(QMainWindow):
         self.anim_frame = AnimFrame()
         self.widget_layout.addWidget(self.anim_frame)
 
+        self.op_frame = OPFrame()
+        self.widget_layout.addWidget(self.op_frame)
+
         self.io_frame = IOFrame()
         self.widget_layout.addWidget(self.io_frame)
 
@@ -66,6 +70,7 @@ class MainWindow(QMainWindow):
 
     def start_speech_input(self):
         self.io_frame.clear_label()
+
         self.audio_thread = QThread()
         self.processor.moveToThread(self.audio_thread)
         self.audio_thread.started.connect(self.processor.process_input_stream)

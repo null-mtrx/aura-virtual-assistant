@@ -28,6 +28,7 @@ class BeadFrame(QWidget):
         super().__init__()
         self.primary_bead_radius = PRIMARY_MIN_BEAD_RAD
         self.secondary_bead_radius = SECONDARY_MIN_BEAD_RAD
+        self.setMaximumHeight(200)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Expanding)
 
     @Property(float)
