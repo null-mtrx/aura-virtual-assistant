@@ -3,3 +3,8 @@ QMainWindow {
     background-color: #030303;
 }
 
+QLabel {
+    color: #D3D3D3
+}
+
+

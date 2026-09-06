@@ -13,6 +13,7 @@ from window import MainWindow
 import sys
 
 app = QApplication(sys.argv)
+app.setStyle("Fusion")
 window = MainWindow()
 window.show()
 app.exec()

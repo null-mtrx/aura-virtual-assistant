@@ -19,7 +19,7 @@ class AgentInterface(QObject):
         agent_state = {"messages": [HumanMessage(query)]}
 
         print("started")
-        messages = self.agent.app.invoke(agent_state)
+        messages = self.agent.app.invoke(agent_state)  # pyright: ignore[reportUnknownMemberType, reportArgumentType]
         response = messages["messages"][-1].content[0]["text"]
         self.output_tokens.emit(response)
         self.write_to_history(messages["messages"])

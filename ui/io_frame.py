@@ -18,7 +18,7 @@ class IOFrame(QFrame):
         self.setLayout(self.frame_layout)
 
     def _build_ui(self):
-        self.label = QLabel("Text here")
+        self.label = QLabel("Start speaking here")
         self.label.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.label.setWordWrap(True)
         self.frame_layout.addWidget(self.label)
