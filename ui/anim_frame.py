@@ -4,14 +4,7 @@ This module handles the animation frame that plays the bead when the user is spe
 
 from PySide6.QtWidgets import QWidget, QSizePolicy, QVBoxLayout
 from PySide6.QtGui import QPainter, QPen, QBrush, QColor
-from PySide6.QtCore import (
-    QPoint,
-    QSize,
-    Property,
-    QTimer,
-    QPropertyAnimation,
-    QEasingCurve,
-)
+from PySide6.QtCore import QPoint, QSize, Property, QTimer
 
 import numpy as np
 
