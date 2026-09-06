@@ -109,8 +109,6 @@ class AnimFrame(QWidget):
         return rms_value
 
     def start_output_animation(self, duration):
-        print("This block is executing")
-        print(duration)
         self.samples = int(duration * 5)  # 200ms delay
         self.low = 0.004173
         self.high = 0.125
@@ -122,11 +120,9 @@ class AnimFrame(QWidget):
         self.timer.start(200)
 
     def _tick(self):
-        print(self.samples)
         if self.samples <= 0:
             self.animate_beads(0)
             self.timer.stop()
-            print("Done")
         else:
             rms = self.generate_speech_random_rms(
                 self.prev_val, self.low, self.high, self.threshold
