@@ -91,6 +91,7 @@ class MainWindow(QMainWindow):
             self.ai_query.emit(self.io_frame.label.text())
 
     def play_output(self, text: str):
+        self.speaker.duration.connect(self.anim_frame.start_output_animation)
         self.speaker.speak(text)
         self.control_frame.input_button.setEnabled(True)
 

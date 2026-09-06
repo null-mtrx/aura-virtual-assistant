@@ -4,7 +4,14 @@ This module handles the animation frame that plays the bead when the user is spe
 
 from PySide6.QtWidgets import QWidget, QSizePolicy, QVBoxLayout
 from PySide6.QtGui import QPainter, QPen, QBrush, QColor
-from PySide6.QtCore import QPoint, QSize, Property
+from PySide6.QtCore import (
+    QPoint,
+    QSize,
+    Property,
+    QTimer,
+    QPropertyAnimation,
+    QEasingCurve,
+)
 
 import numpy as np
 
@@ -98,3 +105,39 @@ class AnimFrame(QWidget):
 
         setattr(self.bead, "primary_bead_rad", new_primary_bead_rad)
         setattr(self.bead, "secondary_bead_rad", new_secondary_bead_rad)
+
+    def generate_speech_random_rms(self, prev_value, low, high, threshold):
+        rms_value = 0
+        if prev_value >= threshold:
+            rms_value = np.random.uniform(prev_value / 8, prev_value)
+        else:
+            rms_value = np.random.uniform(prev_value, 8 * prev_value)
+
+        return rms_value
+
+    def start_output_animation(self, duration):
+        print("This block is executing")
+        print(duration)
+        self.samples = int(duration * 5)  # 200ms delay
+        self.low = 0.004173
+        self.high = 0.125
+        self.threshold = 0.02657
+        self.prev_val = 0.026
+
+        self.timer = QTimer()
+        self.timer.timeout.connect(self._tick)
+        self.timer.start(200)
+
+    def _tick(self):
+        print(self.samples)
+        if self.samples <= 0:
+            self.animate_beads(0)
+            self.timer.stop()
+            print("Done")
+        else:
+            rms = self.generate_speech_random_rms(
+                self.prev_val, self.low, self.high, self.threshold
+            )
+            self.prev_val = rms
+            self.animate_beads(rms)
+            self.samples -= 1

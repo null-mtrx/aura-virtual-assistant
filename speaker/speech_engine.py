@@ -3,8 +3,13 @@ import soundfile
 import sounddevice
 import io
 
+from PySide6.QtCore import QObject, Signal
 
-class SpeechEngine:
+
+class SpeechEngine(QObject):
+    duration = Signal(float)
+    finished = Signal(int)
+
     def __init__(self, config):
         super().__init__()
         self.accent = config["accent"]
@@ -17,4 +22,8 @@ class SpeechEngine:
         audio_buffer.seek(0)
 
         audio, sample_rate = soundfile.read(audio_buffer)
+        audio_buffer.seek(0)
+        speech_info = soundfile.info(audio_buffer)
+        self.duration.emit(speech_info.duration)
         sounddevice.play(audio, sample_rate)
+        self.finished.emit(1)
