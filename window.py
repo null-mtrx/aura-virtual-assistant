@@ -70,6 +70,7 @@ class MainWindow(QMainWindow):
 
     def start_speech_input(self):
         self.io_frame.clear_label()
+        self.op_frame.clear_label()
 
         self.audio_thread = QThread()
         self.processor.moveToThread(self.audio_thread)
@@ -91,6 +92,7 @@ class MainWindow(QMainWindow):
             self.ai_query.emit(self.io_frame.label.text())
 
     def play_output(self, text: str):
+        self.op_frame.update_label_text(text)
         self.speaker.duration.connect(self.anim_frame.start_output_animation)
         self.speaker.speak(text)
         self.control_frame.input_button.setEnabled(True)

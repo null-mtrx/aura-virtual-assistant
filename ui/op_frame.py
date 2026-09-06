@@ -1,5 +1,11 @@
-from PySide6.QtWidgets import QFrame, QVBoxLayout, QLabel, QSizePolicy
-from PySide6.QtCore import Signal
+from PySide6.QtWidgets import (
+    QFrame,
+    QVBoxLayout,
+    QLabel,
+    QSizePolicy,
+    QGraphicsOpacityEffect,
+)
+from PySide6.QtCore import Signal, QPropertyAnimation, QEasingCurve
 
 
 class OPFrame(QFrame):
@@ -20,7 +26,19 @@ class OPFrame(QFrame):
         self.frame_layout.addWidget(self.label)
 
     def update_label_text(self, voice_input):
+        self.opacity_effect = QGraphicsOpacityEffect()
+        self.opacity_effect.setOpacity(0.0)
+
         self.label.setText(voice_input)
+        self.label.setGraphicsEffect(self.opacity_effect)
+
+        self.animation = QPropertyAnimation(self.opacity_effect, b"opacity")
+        self.animation.setDuration(1000)
+        self.animation.setStartValue(0.0)
+        self.animation.setEndValue(1.0)
+        self.animation.setEasingCurve(QEasingCurve.Type.InOutQuad)
+
+        self.animation.start()
 
     def clear_label(self):
         self.label.setText("")
