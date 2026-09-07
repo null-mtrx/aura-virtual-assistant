@@ -15,6 +15,8 @@
     },
     "ui": {
         "mic-icon": "./src/assets/mic-icon.svg",
-        "setting-icon": "./src/assets/sliders.svg"
+        "setting-icon": "./src/assets/sliders.svg",
+        "wifi-up-icon": "./src/assets/wifi.svg",
+        "wifi-down-icon": "./src/assets/wifi-off.svg"
     }
 }
