@@ -14,6 +14,7 @@
         "data_path": "/path/to/user/data"
     },
     "ui": {
-        "mic-icon": "./src/assets/mic-icon.svg"
+        "mic-icon": "./src/assets/mic-icon.svg",
+        "setting-icon": "./src/assets/sliders.svg"
     }
 }

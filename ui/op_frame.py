@@ -21,7 +21,7 @@ class OPFrame(QFrame):
         self.setLayout(self.frame_layout)
 
     def _build_ui(self):
-        self.label = QLabel("Text here")
+        self.label = QLabel("")
         self.label.setWordWrap(True)
         self.label.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.frame_layout.addWidget(self.label)
