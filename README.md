@@ -96,7 +96,8 @@ The following project is written purely in python with the following libraries b
 Other modules are used in various tools which can all be installed using the `requirements.txt`
 
 ## Limitations
-> [!NOTE] This is a student project and is not meant to be treated as a professional grade software. There are bugs in multiple areas which would need fixing
+> [!NOTE]
+> This is a student project and is not meant to be treated as a professional grade software. There are bugs in multiple areas which would need fixing
 
 1. Some bugs present in the UI need to be updated such as the UI struggling to display larger outputs
 2. Unpolished animations with no interpolation between each state change causing choppiness at some places
