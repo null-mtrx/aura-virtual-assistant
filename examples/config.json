@@ -12,5 +12,8 @@
     "agent_dets": {
         "vector_store": "/path/to/vector/store",
         "data_path": "/path/to/user/data"
+    },
+    "ui": {
+        "mic-icon": "./src/assets/mic-icon.svg"
     }
 }
