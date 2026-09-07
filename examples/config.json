@@ -1,0 +1,16 @@
+{
+    "listener_params": {
+        "encoder_path": "/path/to/encoder",
+        "decoder_path": "/path/to/decoder",
+        "joiner_path": "/path/to/joiner",
+        "tokens": "/path/to/tokens"
+    },
+    "speaker_params": {
+        "language": "language",
+        "accent": "accent"
+    },
+    "agent_dets": {
+        "vector_store": "/path/to/vector/store",
+        "data_path": "/path/to/user/data"
+    }
+}
