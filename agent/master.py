@@ -14,6 +14,7 @@ from tools.system import (
 )
 from tools.web import open_webpage, open_wiki_page, open_youtube_video
 from tools.context_manager import get_context
+from tools.about import update_about, read_about
 
 
 class AgentState(TypedDict):
@@ -31,6 +32,8 @@ class AgentGraph:
             open_webpage,
             open_wiki_page,
             open_youtube_video,
+            update_about,
+            read_about,
         ]
         self.LLM = ChatGoogleGenerativeAI(model=model).bind_tools(self.tools)
         self.agent_graph = StateGraph(AgentState)
@@ -81,6 +84,8 @@ class AgentGraph:
             6. Open Web page: Allows you to open any web page as instructed by the user
             7. Open wiki page: Provides you with a summary of the wikipedia page for a given topic
             8. Search youtube video: Allows you to open any video link based on the title 
+            9. Update about: Allows you to update details about the user to keep them in memory like their personal details like name etc.
+            10. Read about: Allows you to read the details about the user to keep for additional context. You may invoke this tool only if you feel that details about the user directly influence your result.
             ## Past History
             """)
 
