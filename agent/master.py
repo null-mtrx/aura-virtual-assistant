@@ -14,7 +14,7 @@ from tools.system import (
 )
 from tools.web import open_webpage, open_wiki_page, open_youtube_video
 from tools.context_manager import get_context
-from tools.about import update_about, read_about
+from tools.about_manager import update_about, read_about
 from tools.todo_manager import update_todo, read_todo, remove_todo
 
 
