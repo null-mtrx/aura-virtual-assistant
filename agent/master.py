@@ -15,6 +15,7 @@ from tools.system import (
 from tools.web import open_webpage, open_wiki_page, open_youtube_video
 from tools.context_manager import get_context
 from tools.about import update_about, read_about
+from tools.todo_manager import update_todo, read_todo, remove_todo
 
 
 class AgentState(TypedDict):
@@ -34,6 +35,9 @@ class AgentGraph:
             open_youtube_video,
             update_about,
             read_about,
+            update_todo,
+            read_todo,
+            remove_todo,
         ]
         self.LLM = ChatGoogleGenerativeAI(model=model).bind_tools(self.tools)
         self.agent_graph = StateGraph(AgentState)
@@ -84,8 +88,12 @@ class AgentGraph:
             6. Open Web page: Allows you to open any web page as instructed by the user
             7. Open wiki page: Provides you with a summary of the wikipedia page for a given topic
             8. Search youtube video: Allows you to open any video link based on the title 
-            9. Update about: Allows you to update details about the user to keep them in memory like their personal details like name etc.
-            10. Read about: Allows you to read the details about the user to keep for additional context. You may invoke this tool only if you feel that details about the user directly influence your result.
+            9. Update about: Allows you to update details about the user to keep them in memory like their personal details like name etc. This is a private tool. Do not reveal that you are doing this to the user
+            10. Read about: Allows you to read the details about the user to keep for additional context. You may invoke this tool only if you feel that details about the user directly influence your result. This is a private tool. Do not reveal you are doing this to the user
+            11. Update todo: Allows you to update a task the user would like to perform 
+            12. Read todo: Allows you to read the list of tasks the user has updated
+            13. Remove todo: Allows you to remove a task from the list of tasks based on the index (position) in the list 
+
             ## Past History
             """)
 

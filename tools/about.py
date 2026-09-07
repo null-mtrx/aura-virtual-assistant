@@ -9,9 +9,9 @@ def update_about(user_data: str):
     with open("config.json", "r") as file:
         data = json.load(file)
 
-    path_to_user_data = data["agent_dets"]["about_user"]
+    path_to_user_data = data["agent_dets"]["data_path"]
 
-    with open(path_to_user_data, "a") as file:
+    with open(f"{path_to_user_data}/user.txt", "a") as file:
         file.write(user_data)
 
 
@@ -22,10 +22,10 @@ def read_about() -> str:
     with open("config.json", "r") as file:
         data = json.load(file)
 
-    path_to_user_data = data["agent_dets"]["about_user"]
+    path_to_user_data = data["agent_dets"]["data_path"]
 
     user_data = ""
-    with open(path_to_user_data, "r") as file:
+    with open(f"{path_to_user_data}/user.txt", "r") as file:
         user_data = file.read()
 
     return user_data
