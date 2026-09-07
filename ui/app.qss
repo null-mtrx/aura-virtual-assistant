@@ -4,7 +4,11 @@ QMainWindow {
 }
 
 QLabel {
-    color: #D3D3D3
+    color: #D3D3D3;
+    font-size: 15px
 }
 
-
+QPushButton{
+    background-color: #030303;
+    color: #D3D3D3;
+}

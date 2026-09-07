@@ -5,7 +5,7 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QGraphicsOpacityEffect,
 )
-from PySide6.QtCore import Signal, QPropertyAnimation, QEasingCurve
+from PySide6.QtCore import Signal, QPropertyAnimation, QEasingCurve, Qt
 
 
 class OPFrame(QFrame):
@@ -13,7 +13,7 @@ class OPFrame(QFrame):
         super().__init__()
         self.frame_layout = QVBoxLayout()
         self._build_ui()
-        self.setMinimumHeight(240)
+        self.setMinimumHeight(260)
         self.setSizePolicy(
             QSizePolicy.Policy.Expanding, QSizePolicy.Policy.MinimumExpanding
         )
@@ -23,6 +23,7 @@ class OPFrame(QFrame):
     def _build_ui(self):
         self.label = QLabel("Text here")
         self.label.setWordWrap(True)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.frame_layout.addWidget(self.label)
 
     def update_label_text(self, voice_input):
