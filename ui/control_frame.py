@@ -4,6 +4,7 @@ from PySide6.QtGui import QIcon
 
 import json
 import os
+import subprocess
 
 
 class ControlFrame(QFrame):
@@ -51,10 +52,13 @@ class ControlFrame(QFrame):
         self.settings_button = QPushButton()
         self.settings_button.setIcon(QIcon(setting_file_path))
         self.settings_button.setIconSize(QSize(24, 24))
+        self.settings_button.clicked.connect(
+            lambda: subprocess.run(["xdg-open", "config.json"], text=True)
+        )
 
         self.wifi_button = QPushButton()
         self.wifi_button.setIcon(QIcon(wifi_loaded_icon))
-        self.wifi_button.setIconSize(QSize(24, 24))
+        self.wifi_button.setIconSize(QSize(18, 18))
 
         self.control_frame_layout.addWidget(self.wifi_button)
         self.control_frame_layout.addSpacerItem(

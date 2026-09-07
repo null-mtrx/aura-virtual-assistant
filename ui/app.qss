@@ -8,6 +8,10 @@ QLabel {
     font-size: 15px
 }
 
+QLabel#title {
+    color: #454545
+}
+
 
 QPushButton{
     background-color: #030303;

@@ -21,10 +21,15 @@ class OPFrame(QFrame):
         self.setLayout(self.frame_layout)
 
     def _build_ui(self):
+        self.title_label = QLabel("<h1>Hi I'm Aura</h1><br>How can I help you today")
+        self.title_label.setAlignment(Qt.AlignmentFlag.AlignHCenter)
+        self.title_label.setObjectName("title")
+
         self.label = QLabel("")
         self.label.setWordWrap(True)
         self.label.setAlignment(Qt.AlignmentFlag.AlignTop)
         self.frame_layout.addWidget(self.label)
+        self.frame_layout.addWidget(self.title_label)
 
     def update_label_text(self, voice_input):
         self.opacity_effect = QGraphicsOpacityEffect()
@@ -42,4 +47,5 @@ class OPFrame(QFrame):
         self.animation.start()
 
     def clear_label(self):
+        self.title_label.setText("")
         self.label.setText("")
