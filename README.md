@@ -101,5 +101,6 @@ Other modules are used in various tools which can all be installed using the `re
 
 1. Some bugs present in the UI need to be updated such as the UI struggling to display larger outputs
 2. Unpolished animations with no interpolation between each state change causing choppiness at some places
-3. Lesser overall tools which need; with more needing to be implemented
-4. LLM is not immune to prompt injection. Prompting strategies need to be improved. 
+3. No animation to indicate the assistant is thinking which is just weird.
+4. Lesser overall tools which need; with more needing to be implemented
+5. LLM is not immune to prompt injection. Prompting strategies need to be improved. 
