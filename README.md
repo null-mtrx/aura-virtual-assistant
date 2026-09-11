@@ -6,7 +6,7 @@
   <img width="388" height="844" alt="Screen-Recording" src="https://github.com/user-attachments/assets/9860f9df-b19e-4c2e-86d9-a27aee0fd36b" />
 </p>
 
-This project was originally started in 2021. It has since been upgraded with real time speech processing, agenting based query handling powered by Gemini and more comprehensive audio outputs using gTTS. The UI has been written using the Qt framework and is heavily inspired by Microsoft's <a href="https://en.wikipedia.org/wiki/Cortana_(virtual_assistant)">Cortana</a>. The project is written with python and requires a Gemini API key to run. For further details, refer to the set up instructions given below.
+This project was originally started in 2021. It has since been upgraded with speech recognition streaming, agenting based query handling powered by Gemini and more humanly sounding audio outputs using gTTS. The UI has been written using the Qt framework and is heavily inspired by Microsoft's <a href="https://en.wikipedia.org/wiki/Cortana_(virtual_assistant)">Cortana</a>. The project is written with python and requires a Gemini API key to run. For further details, refer to the set up instructions given below.
 
 ## Architecture
 Here is a basic architecture diagram illustrating the agent's workflow.
@@ -50,7 +50,7 @@ flowchart TD
 ## Set Up Instructions
 To set this project up, firstly, create a virtual environment and activate it. Clone the repository using git
 ```bash
-git clone https://github.com/null-mtrx/aura-virtual-assistant
+git clone https://github.com/0xeX0R/aura-virtual-assistant
 ```
 Download Sherpa Onnx for the recogniser from <a href="https://k2-fsa.github.io/sherpa/onnx/pretrained_models/index.html">here</a>. Install the requirements as mentioned in requirements.txt
 ```bash
